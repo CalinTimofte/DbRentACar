@@ -47,6 +47,7 @@ CREATE TABLE masini
 CREATE TABLE clienti
   (
     id_client     INT NOT NULL PRIMARY KEY,
+	username     VARCHAR2(100) NOT NULL UNIQUE,
     nume          VARCHAR2(100) NOT NULL,
     prenume       VARCHAR2(70) NOT NULL,
     numar_telefon VARCHAR2(30) NOT NULL,
@@ -104,6 +105,7 @@ lista_clasa varr      := varr ('SUV','Premium','Standard','Mini','Economic','Int
     v_id_parcare_preluare INTEGER ;
 	
   -- CLienti :
+  v_username VARCHAR2(255);
     v_nume          VARCHAR2(255);
     v_prenume       VARCHAR2(255);   
     v_email         VARCHAR2(255);
@@ -248,6 +250,17 @@ v_prenume := lista_prenume(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume.count))+1);
 
       v_telefon := 0 || 7 || TRUNC(DBMS_RANDOM.VALUE(0,10)) || TRUNC(DBMS_RANDOM.VALUE(0,10)) || TRUNC(DBMS_RANDOM.VALUE(0,10)) || TRUNC(DBMS_RANDOM.VALUE(0,10))|| TRUNC(DBMS_RANDOM.VALUE(0,10))|| TRUNC(DBMS_RANDOM.VALUE(0,10))|| TRUNC(DBMS_RANDOM.VALUE(0,10))|| TRUNC(DBMS_RANDOM.VALUE(0,10)) ;
  	
+	--username unic
+	 v_temp1 :=TRUNC(DBMS_RANDOM.VALUE(0,100000));
+	 LOOP         
+         select count(*) into v_temp from clienti where username = v_nume||v_temp1;
+         exit when v_temp=0;
+         v_temp1 :=  TRUNC(DBMS_RANDOM.VALUE(0,100));
+      END LOOP;  
+	  
+	  v_username := v_nume||v_temp1;
+	
+	
 	--email unic
 	v_temp:='';
       v_email := lower(v_nume ||'.'|| v_prenume);
@@ -280,7 +293,7 @@ v_prenume := lista_prenume(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume.count))+1);
     WHEN v_temp=0;
     END LOOP;
 
-INSERT INTO clienti VALUES(v_i,v_nume,v_prenume,v_telefon,v_email,v_parola,v_numar_permis);
+INSERT INTO clienti VALUES(v_i,v_username,v_nume,v_prenume,v_telefon,v_email,v_parola,v_numar_permis);
   END LOOP ;
   DBMS_OUTPUT.PUT_LINE('Inserarea clientilor reusita !');  
   
