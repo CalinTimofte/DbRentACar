@@ -10,22 +10,22 @@ DROP TABLE istoric CASCADE CONSTRAINTS
 /
 DROP TABLE drumuri CASCADE CONSTRAINTS
 /
-CREATE TABLE drumuri
-  (
-    id    INT NOT NULL PRIMARY KEY,
-   id_parcare1          INTEGER NOT NULL,
-    id_parcare2       INTEGER NOT NULL,
-    cost_drum     INTEGER NOT NULL,
- CONSTRAINT fk_drumuri_id_parcare_1 FOREIGN KEY (id_parcare) REFERENCES parcari(id_parcare),
-CONSTRAINT fk_drumuri_id_parcare_2 FOREIGN KEY (id_parcare) REFERENCES parcari(id_parcare)
-  )
-/
 CREATE TABLE parcari
   (
     id_parcare    INT NOT NULL PRIMARY KEY,
     oras          VARCHAR2(50) NOT NULL,
     adresa        VARCHAR2(50) NOT NULL,
     numar_telefon VARCHAR2(50) NOT NULL
+  )
+/
+CREATE TABLE drumuri
+  (
+    id_drumuri    INT NOT NULL PRIMARY KEY,
+   id_parcare1          INTEGER NOT NULL,
+    id_parcare2       INTEGER NOT NULL,
+    cost_drum     INTEGER NOT NULL,
+ CONSTRAINT fk_drumuri_id_parcare_1 FOREIGN KEY (id_parcare1) REFERENCES parcari(id_parcare),
+CONSTRAINT fk_drumuri_id_parcare_2 FOREIGN KEY (id_parcare2) REFERENCES parcari(id_parcare)
   )
 /
 CREATE TABLE masini
@@ -137,27 +137,6 @@ v_nr_note     INTEGER;
 
 BEGIN
 
---------------Drumuri------------
-DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
-  FOR v_i IN 1..100 LOOP
-       SELECT COUNT(*) INTO v_temp1 FROM parcari;
-    LOOP
-      v_id_parcare1 := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
-      v_id_parcare2 := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
-      v_temp := 1;
-      if( v_id_parcare1 <> v_id_parcare2) then
-       SELECT COUNT(*) INTO v_temp FROM drumuri WHERE (id_parcare1 = v_id_parcare1 AND id_parcare2 = v_id_parcare2) OR (id_parcare2 = v_id_parcare1 AND id_parcare1 = v_id_parcare2) ;
-      end if;
-      EXIT WHEN v_temp=0;
-      
-    END LOOP;
-    cost_drum := TRUNC(DBMS_RANDOM.VALUE(10,10000))+1;
-    INSERT INTO drumuri VALUES
-      (v_i, v_id_parcare1,  v_id_parcare2, cost_drum);
-    
-  END LOOP;
-  DBMS_OUTPUT.PUT_LINE('Inserarea drumurilor reusita !');
-
 ------------PARCARI-------------------------------------------------
   DBMS_OUTPUT.PUT_LINE('Inserarea a parcarilor...');
   FOR v_i IN 1..100 LOOP
@@ -181,6 +160,27 @@ DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
       (v_i, v_oras, v_adresa, v_telefon);
   END LOOP;
   DBMS_OUTPUT.PUT_LINE('Inserarea parcarilor reusita !');
+  
+--------------Drumuri------------
+DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
+  FOR v_i IN 1..100 LOOP
+       SELECT COUNT(*) INTO v_temp1 FROM parcari;
+    LOOP
+      v_id_parcare1 := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
+      v_id_parcare2 := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
+      v_temp := 1;
+      if( v_id_parcare1 <> v_id_parcare2) then
+       SELECT COUNT(*) INTO v_temp FROM drumuri WHERE (id_parcare1 = v_id_parcare1 AND id_parcare2 = v_id_parcare2) OR (id_parcare2 = v_id_parcare1 AND id_parcare1 = v_id_parcare2) ;
+      end if;
+      EXIT WHEN v_temp=0;      
+    END LOOP;
+    
+    cost_drum := TRUNC(DBMS_RANDOM.VALUE(10,10000))+1;
+    INSERT INTO drumuri VALUES
+      (v_i, v_id_parcare1,  v_id_parcare2, cost_drum);
+    
+  END LOOP;
+  DBMS_OUTPUT.PUT_LINE('Inserarea drumurilor reusita !');
   
   -----------------------MASINI -----------------------------------------------------------------------------------
   DBMS_OUTPUT.PUT_LINE('Inserarea masinilor...');
