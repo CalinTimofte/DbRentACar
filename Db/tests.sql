@@ -1,0 +1,20 @@
+--tests
+--SET SERVEROUTPUT ON;
+--DECLARE
+--  c_parcari SYS_REFCURSOR;
+--  v_std_linie c_parcari%ROWTYPE;
+--BEGIN
+--  afiseaza_parcari(c_parcari);
+--  FOR v_std_linie IN c_parcari LOOP
+--    DBMS_OUTPUT.PUT_LINE(v_std_linie.oras||' '||v_std_linie.adresa||' '||v_std_linie.numar_telefon);
+--  END LOOP;
+--  CLOSE c_parcari;
+--END;
+
+--SET SERVEROUTPUT ON;
+--DECLARE
+--v_var clienti.id_client%TYPE;
+--BEGIN
+--  SELECT MAX(id_client)+1 INTO v_var FROM clienti;
+--  DBMS_OUTPUT.PUT_LINE( v_var );
+--END;
