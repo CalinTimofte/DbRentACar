@@ -31,3 +31,7 @@ BEGIN
       numar_note = numar_note + 1
   WHERE id_masina=v_id_masina;
 END notare_masina;
+
+--Afisare informatii profil utilizator:
+CREATE OR REPLACE PROCEDURE profil_utilizator
+(v_id_user client.id_client%TYPE)
