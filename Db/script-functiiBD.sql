@@ -49,11 +49,21 @@ END profil_utilizator;
 CREATE OR REPLACE PROCEDURE login_user
 (v_username clienti.username%TYPE, v_parola clienti.parola%TYPE, v_id_client OUT clienti.id_client%TYPE)
 AS
-v_record_count NUMBER := 0;
+v_record_count_user NUMBER := 0;
+v_record_count_istoric NUMBER := 0;
+v_data_conectare istoric.data_conectare%TYPE := sysdate();
+v_data_deconectare istoric.data_deconectare%TYPE := NULL;
 BEGIN
-  SELECT ISNULL(COUNT(*), 0) INTO v_record_count FROM clienti WHERE (v_username = username) AND (v_parola = parola);
-  IF (v_record_user = 1)
-    THEN  SELECT id_client INTO v_id_client FROM clienti WHERE (v_username = username) AND (v_parola = parola);
+  SELECT ISNULL(COUNT(*), 0) INTO v_record_count_user FROM clienti WHERE (v_username = username) AND (v_parola = parola);
+  IF (v_record_count_user = 1)
+    THEN  
+      SELECT id_client INTO v_id_client FROM clienti WHERE (v_username = username) AND (v_parola = parola);
+      SELECT MAX(id_istoric)+1 INTO v_record_count_istoric FROM istoric;
+      INSERT INTO istoric
+      (id_istoric, id_client, data_conectare, data_deconectare)
+      VALUES
+      (v_record_count_istoric, v_id_client, v_data_conectare, v_data_deconectare);
+      COMMIT;
     ELSE v_id_client := -1;
   END IF;
 END login_user;
@@ -79,5 +89,5 @@ CREATE OR REPLACE PROCEDURE istoric_rezervari
 AS
 BEGIN
   open c_istoric_rezervari for
-  SELECT * FROM rezervari WHERE id_client=v_id_client;
+  SELECT * FROM rezervari WHERE id_client=v_id_client ORDER BY REZERVATION_DATE DESC;
 END istoric_rezervari;
