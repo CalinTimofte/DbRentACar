@@ -34,4 +34,26 @@ END notare_masina;
 
 --Afisare informatii profil utilizator:
 CREATE OR REPLACE PROCEDURE profil_utilizator
-(v_id_user client.id_client%TYPE)
+(v_id_user client.id_client%TYPE, v_username clienti.username%TYPE, v_nume OUT clienti.nume%TYPE, v_prenume OUT clienti.prenume%TYPE, v_numar_telefon OUT clienti.numar_telefon%TYPE, v_email OUT clienti.email%TYPE)
+AS
+v_record_count NUMBER := 0;
+BEGIN
+  SELECT ISNULL(COUNT(*), 0) INTO v_record_count FROM clienti WHERE v_id_user = id_user; 
+  IF (v_record_user = 1)
+    THEN SELECT username, nume, prenume, numar_telefon, email INTO v_username, v_nume, v_prenume, v_numar_telefon, v_email FROM clienti WHERE v_id_user = id_user;
+--    ELSE error
+  END IF;
+END profil_utilizator;
+
+--Login user:
+CREATE OR REPLACE PROCEDURE login_user
+(v_username clienti.username%TYPE, v_parola clienti.parola%TYPE, v_id_client OUT clienti.id_client%TYPE)
+AS
+v_record_count NUMBER := 0;
+BEGIN
+  SELECT ISNULL(COUNT(*), 0) INTO v_record_count FROM clienti WHERE (v_username = username) AND (v_parola = parola);
+  IF (v_record_user = 1)
+    THEN  SELECT id_client INTO v_id_client FROM clienti WHERE (v_username = username) AND (v_parola = parola);
+    ELSE v_id_client := -1;
+  END IF;
+END login_user;
