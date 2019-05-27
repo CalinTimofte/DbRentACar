@@ -57,3 +57,7 @@ BEGIN
     ELSE v_id_client := -1;
   END IF;
 END login_user;
+
+--Rezervare masina:
+CREATE OR REPLACE PROCEDURE rezervare_masina
+()
