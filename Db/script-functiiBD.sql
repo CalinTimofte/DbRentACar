@@ -60,4 +60,24 @@ END login_user;
 
 --Rezervare masina:
 CREATE OR REPLACE PROCEDURE rezervare_masina
-()
+(v_id_client rezervari.id_client%TYPE, v_id_masina rezervari.id_masina%TYPE, v_first_rent_date rezervari.first_rent_date%TYPE, v_last_rent_date rezervari.last_rent_date%TYPE, v_id_parcare_preluare rezervari.id_parcare_preluare%TYPE, v_id_parcare_predare rezervari.id_parcare_predare%TYPE)
+AS
+v_id_rezervari rezervari.id_rezervari%TYPE;
+v_rezervation_date rezervari.rezervation_date%TYPE := sysdate();
+BEGIN
+  SELECT MAX(id_rezervari)+1 INTO v_id_rezervari FROM rezervari;
+  INSERT INTO rezervari
+  (id_rezervari, id_client, id_masina, first_rent_date, last_rent_date, rezervation_date, id_parcare_predare, id_parcare_preluare)
+  VALUES
+  (v_id_rezervari, v_id_client, v_id_masina, v_first_rent_date, v_last_rent_date, v_rezervation_date, v_id_parcare_predare, v_id_parcare_preluare);
+  COMMIT;
+END rezervare_masina;
+
+--Istoric rezervari, profil:
+CREATE OR REPLACE PROCEDURE istoric_rezervari
+(v_id_client rezervari.id_client%TYPE, c_istoric_rezervari OUT SYS_REFCURSOR)
+AS
+BEGIN
+  open c_istoric_rezervari for
+  SELECT * FROM rezervari WHERE id_client=v_id_client;
+END istoric_rezervari;
