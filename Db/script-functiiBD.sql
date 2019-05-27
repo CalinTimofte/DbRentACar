@@ -91,3 +91,22 @@ BEGIN
   open c_istoric_rezervari for
   SELECT * FROM rezervari WHERE id_client=v_id_client ORDER BY REZERVATION_DATE DESC;
 END istoric_rezervari;
+
+--Logout
+CREATE OR REPLACE PROCEDURE logout
+(v_id_user clienti.id_client%TYPE)
+AS
+BEGIN
+  UPDATE istoric
+  SET data_deconectare = sysdate()
+  WHERE v_id_user=id_client AND data_deconectare IS NULL;
+END logout;
+
+--Stergere rezervare:
+CREATE OR REPLACE PROCEDURE stergere_rezervare
+(v_id_user clienti.id_client%TYPE, v_id_rezervare rezervari.id_rezervari%TYPE)
+AS
+BEGIN
+  DELETE FROM rezervari
+  WHERE v_id_user = id_client AND v_id_rezervare=id_rezervari AND first_rent_date<sysdate();
+END stergere_rezervare;
