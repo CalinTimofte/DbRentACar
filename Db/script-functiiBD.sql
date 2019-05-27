@@ -1,3 +1,4 @@
+--Afisare parcari:
 CREATE OR REPLACE PROCEDURE afiseaza_parcari
 (c_parcari OUT SYS_REFCURSOR)
 AS
@@ -6,6 +7,7 @@ BEGIN
   SELECT * FROM parcari;
 END afiseaza_parcari;
 
+--Inregistrare utilizator:
 CREATE OR REPLACE PROCEDURE register_user
 (v_username clienti.username%TYPE, v_nume clienti.nume%TYPE, v_prenume clienti.prenume%TYPE, v_numar_telefon clienti.numar_telefon%TYPE, v_email clienti.email%TYPE, v_parola clienti.parola%TYPE, v_numar_permis clienti.numar_permis%TYPE)
 AS
@@ -19,3 +21,13 @@ BEGIN
   COMMIT;
 END register_user;
 
+--Acordare nota masina:
+CREATE OR REPLACE PROCEDURE notare_masina
+(v_id_masina masini.id_masina%TYPE, v_nota masini.nota_clienti%TYPE)
+AS
+BEGIN
+  UPDATE masini
+  SET nota_clienti = (nota_clienti*numar_note + v_nota)/(numar_note + 1),
+      numar_note = numar_note + 1
+  WHERE id_masina=v_id_masina;
+END notare_masina;
