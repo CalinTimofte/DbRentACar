@@ -10,6 +10,16 @@ DROP TABLE istoric CASCADE CONSTRAINTS
 /
 DROP TABLE drumuri CASCADE CONSTRAINTS
 /
+DROP TABLE admini CASCADE CONSTRAINTS
+/
+CREATE TABLE admini
+  (
+    id_admin    INT NOT NULL PRIMARY KEY,
+   username VARCHAR2(100) NOT NULL,
+    parola VARCHAR2(100) NOT NULL
+   
+  )
+/
 CREATE TABLE parcari
   (
     id_parcare    INT NOT NULL PRIMARY KEY,
@@ -138,6 +148,20 @@ v_optiuni     VARCHAR2(20); --da/nu
 v_nr_note     INTEGER;
 
 BEGIN
+------------Admini-------------------------------------------------
+  DBMS_OUTPUT.PUT_LINE('Inserarea a adminilor...');
+  FOR v_i IN 1..5 LOOP
+  
+      v_username := 'Admin'||v_i ;
+      v_parola := 'parola'||v_i ;
+ 
+    INSERT INTO admini VALUES
+      (v_i, v_username, v_parola);
+      
+  END LOOP;
+  
+  DBMS_OUTPUT.PUT_LINE('Inserarea adminilor reusita !');
+  
 
 ------------PARCARI-------------------------------------------------
   DBMS_OUTPUT.PUT_LINE('Inserarea a parcarilor...');
