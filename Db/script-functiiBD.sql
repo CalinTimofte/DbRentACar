@@ -212,3 +212,105 @@ BEGIN
     END IF;
   END IF;
 END afiseaza_masini;
+
+--Numar drumuri
+--CREATE OR REPLACE FUNCTION nr_drumuri
+--RETURN NUMBER
+--AS
+--v_nr NUMBER;
+--BEGIN
+--  SELECT COUNT(*)+1 INTO v_nr FROM drumuri;
+--  return v_nr;
+--END nr_drumuri;
+
+--Drumuri intre parcari:
+CREATE OR REPLACE PROCEDURE drumuri_parcari
+(v_id_parcare_1 drumuri.id_parcare1%TYPE, v_id_parcare_2 drumuri.id_parcare2%TYPE, v_path OUT VARCHAR2)
+AS
+TYPE vc_array IS TABLE OF VARCHAR2(101) index by pls_integer;
+TYPE vc_array_array IS TABLE OF vc_array index by pls_integer;
+v_matrice_adiacenta vc_array_array;
+v_matrice_cost vc_array_array;
+v_distance vc_array;
+v_pred vc_array;
+v_visited vc_array;
+v_count NUMBER;
+v_mindistance NUMBER;
+v_nextnode NUMBER;
+v_i NUMBER := 0;
+v_j NUMBER := 0;
+v_infinity NUMBER := 999999;
+BEGIN
+  FOR v_i IN 0..100 LOOP
+    FOR v_j IN 0..100 LOOP
+      v_matrice_adiacenta (v_i)(v_j) := 0;
+      v_matrice_cost (v_i)(v_j) := v_infinity;
+    END LOOP;
+  END LOOP;
+  
+  FOR v_iterator IN (SELECT id_parcare1, id_parcare2,cost_drum FROM drumuri) LOOP
+    v_matrice_adiacenta(v_iterator.id_parcare1)(v_iterator.id_parcare2) := 1;
+    v_matrice_cost(v_iterator.id_parcare1)(v_iterator.id_parcare2) := v_iterator.cost_drum;
+  END LOOP;
+  
+  FOR v_i IN 0..100 LOOP
+    v_distance(v_i) := v_matrice_cost(v_id_parcare_1)(v_i);
+    v_pred(v_i) := v_id_parcare_1;
+    v_visited(v_i) := 0;
+  END LOOP;
+  
+  v_distance(v_id_parcare_1) := 0;
+  v_visited(v_id_parcare_1) := 1;
+  v_count := 1;
+  
+  WHILE(v_count < 101) LOOP
+    v_mindistance := v_infinity;
+    FOR v_i IN 0..100 LOOP
+      IF((v_distance(v_i) < v_mindistance) AND (v_visited(v_i) = 0)) THEN
+        v_mindistance := v_distance(v_i);
+        v_nextnode := v_i;
+      END IF;
+    END LOOP;
+    
+    v_visited(v_nextnode) := 1;
+    FOR v_i IN 0..100 LOOP
+      IF (v_visited(v_i) = 0) THEN
+        IF (v_mindistance + v_matrice_cost(v_nextnode)(v_i) < v_distance(v_i)) THEN
+          v_distance(v_i) := v_mindistance + v_matrice_cost(v_nextnode)(v_i);
+          v_pred(v_i) := v_nextnode;
+        END IF;
+      END IF;
+    END LOOP;
+    
+    v_count := v_count + 1;
+    
+  END LOOP;
+  
+  v_path := 'Distance of node ' || v_id_parcare_2 || ' from ' || v_id_parcare_1 || ' is ' || v_distance(v_id_parcare_2) || '. ';
+  v_j := v_id_parcare_2;
+  v_path := v_path || 'Path:' || v_id_parcare_2;
+  LOOP
+    v_j := v_pred(v_j);
+    v_path := v_path || '<-' || v_j;
+    EXIT WHEN v_j = v_id_parcare_1;
+  END LOOP;
+END drumuri_parcari;
+
+create or replace PROCEDURE logoutUser
+(v_id_user clienti.id_client%TYPE)
+AS
+counter INTEGER;
+v_count INTEGER;
+BEGIN
+select ID_CLIENT into v_count from ISTORIC  WHERE v_id_user=id_client AND (data_deconectare IS NULL);
+UPDATE istoric
+ SET data_deconectare = sysdate()
+WHERE v_id_user=id_client AND data_deconectare IS NULL;
+ 
+EXCEPTION
+WHEN no_data_found THEN
+  SELECT COUNT(*) INTO counter FROM istoric WHERE v_id_user=id_client AND data_deconectare IS NULL;
+IF counter = 0 THEN
+ raise_application_error (-20001,'You can*t logout. You have to login first');
+end if;
+END logoutUser;
