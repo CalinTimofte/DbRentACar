@@ -131,8 +131,20 @@ END login_admin;
 
 --Search dupa parcare si perioada:
 CREATE OR REPLACE PROCEDURE afiseaza_masini
-(c_masini OUT SYS_REFCURSOR, v_id_parcare parcari.id_parcare%TYPE, v_marca masini.marca%TYPE, v_model_masina masini.model_masina%TYPE, v_clasa masini.clasa%TYPE, v_combustibil masini.combustibil%TYPE)
+(v_id_parcare parcari.id_parcare%TYPE, v_marca masini.marca%TYPE, v_model_masina masini.model_masina%TYPE, v_clasa masini.clasa%TYPE, v_combustibil masini.combustibil%TYPE)
 AS
+c_masini SYS_REFCURSOR;
+v_fisier UTL_FILE.FILE_TYPE;
+output_marca masini.marca%TYPE;
+output_model_masina masini.model_masina%TYPE;
+output_clasa masini.clasa%TYPE;
+output_pret masini.pret%TYPE;
+output_nota_clienti masini.nota_clienti%TYPE; 
+output_numar_locuri masini.numar_locuri%TYPE;
+output_optiuni masini.optiuni%TYPE; 
+output_combustibil masini.combustibil%TYPE;
+output_numar_note masini.combustibil%TYPE;
+v_message CLOB;
 BEGIN
   IF (v_marca IS NOT NULL) THEN
     IF (v_model_masina IS NOT NULL) THEN
@@ -211,6 +223,14 @@ BEGIN
       END IF;
     END IF;
   END IF;
+  v_fisier := UTL_FILE.FOPEN('MYDIR','tempdoc.txt','R');
+  LOOP
+    FETCH c_masini INTO output_marca, output_model_masina, output_clasa, output_pret, output_nota_clienti, output_numar_locuri, output_optiuni, output_combustibil, output_numar_note;
+    EXIT WHEN c_masini%NOTFOUND;
+    v_message := output_marca ||' ' || output_model_masina ||' ' || output_clasa ||' ' || output_pret ||' ' || output_nota_clienti ||' ' || output_numar_locuri ||' ' || output_optiuni ||' ' || output_combustibil ||' ' || output_numar_note || v_newline;
+    UTL_FILE.PUTF(v_fisier, v_message);
+  END LOOP;
+  UTL_FILE.FCLOSE(v_fisier);
 END afiseaza_masini;
 
 --Numar drumuri
@@ -296,6 +316,7 @@ BEGIN
   END LOOP;
 END drumuri_parcari;
 
+--logout user, Bianca:
 create or replace PROCEDURE logoutUser
 (v_id_user clienti.id_client%TYPE)
 AS
