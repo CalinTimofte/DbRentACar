@@ -129,11 +129,86 @@ BEGIN
   END IF;
 END login_admin;
 
-----Search dupa parcare si perioada:
---CREATE OR REPLACE PROCEDURE afiseaza_parcari
---(c_masini OUT SYS_REFCURSOR, v_id)
---AS
---BEGIN
---  open c_parcari for
---  SELECT * FROM parcari;
---END afiseaza_parcari;
+--Search dupa parcare si perioada:
+CREATE OR REPLACE PROCEDURE afiseaza_masini
+(c_masini OUT SYS_REFCURSOR, v_id_parcare parcari.id_parcare%TYPE, v_marca masini.marca%TYPE, v_model_masina masini.model_masina%TYPE, v_clasa masini.clasa%TYPE, v_combustibil masini.combustibil%TYPE)
+AS
+BEGIN
+  IF (v_marca IS NOT NULL) THEN
+    IF (v_model_masina IS NOT NULL) THEN
+      IF (v_clasa IS NOT NULL) THEN
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND clasa = v_clasa AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND clasa = v_clasa;
+        END IF;
+      ELSE
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina;
+        END IF;
+      END IF;
+    ELSE
+      IF (v_clasa IS NOT NULL) THEN
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND clasa = v_clasa AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND clasa = v_clasa;
+        END IF;
+      ELSE
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca;
+        END IF;
+      END IF;
+    END IF;
+  ELSE
+    IF (v_model_masina IS NOT NULL) THEN
+      IF (v_clasa IS NOT NULL) THEN
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND clasa = v_clasa AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND clasa = v_clasa;
+        END IF;
+      ELSE
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina;
+        END IF;
+      END IF;
+    ELSE
+      IF (v_clasa IS NOT NULL) THEN
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND clasa = v_clasa AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND clasa = v_clasa;
+        END IF;
+      ELSE
+        IF (v_combustibil IS NOT NULL) THEN
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND combustibil = v_combustibil;
+        ELSE
+          open c_masini for
+          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0;
+        END IF;
+      END IF;
+    END IF;
+  END IF;
+END afiseaza_masini;
