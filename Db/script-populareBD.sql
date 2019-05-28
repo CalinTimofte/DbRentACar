@@ -51,6 +51,7 @@ CREATE TABLE masini
     optiuni      VARCHAR2(50) NOT NULL,
     combustibil  VARCHAR2(30) NOT NULL,
     numar_note   INT,
+    rezervat   INT,
     CONSTRAINT fk_masini_id_parcare FOREIGN KEY (id_parcare) REFERENCES parcari(id_parcare)
   )
 /
@@ -146,6 +147,7 @@ v_locuri      INTEGER ;
 v_combustibil VARCHAR2(100);
 v_optiuni     VARCHAR2(20); --da/nu
 v_nr_note     INTEGER;
+v_rezervat INTEGER;
 
 BEGIN
 ------------Admini-------------------------------------------------
@@ -248,6 +250,7 @@ DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
     v_nota    := DBMS_RANDOM.VALUE(0,5) ;
     v_nr_note := TRUNC(DBMS_RANDOM.VALUE(0,1000))+1 ;
     v_pret := DBMS_RANDOM.VALUE(30,10000) ;
+    v_rezervat :=DBMS_RANDOM.VALUE(0,1);
     INSERT
     INTO masini VALUES
       (
@@ -261,7 +264,8 @@ DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
         v_locuri,
         v_optiuni,
         v_combustibil,
-        v_nr_note
+        v_nr_note,
+        v_rezervat
       );
   END LOOP ;
   DBMS_OUTPUT.PUT_LINE('Inserarea a masinilor reusita !');  
