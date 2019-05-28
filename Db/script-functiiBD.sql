@@ -110,3 +110,26 @@ BEGIN
   DELETE FROM rezervari
   WHERE v_id_user = id_client AND v_id_rezervare=id_rezervari AND first_rent_date<sysdate();
 END stergere_rezervare;
+
+--Login admin:
+CREATE OR REPLACE PROCEDURE login_admin
+(v_username admini.username%TYPE, v_parola admini.parola%TYPE, v_id_admin OUT admini.id_admin%TYPE)
+AS
+v_record_count_admin NUMBER := 0;
+BEGIN
+  SELECT ISNULL(COUNT(*), 0) INTO v_record_count_admin FROM admini WHERE (v_username = username) AND (v_parola = parola);
+  IF (v_record_count_user = 1)
+    THEN  
+      SELECT id_admin INTO v_id_admin FROM admini WHERE (v_username = username) AND (v_parola = parola);
+    ELSE v_id_admin := -1;
+  END IF;
+END login_admin;
+
+----Search dupa parcare si perioada:
+--CREATE OR REPLACE PROCEDURE afiseaza_parcari
+--(c_masini OUT SYS_REFCURSOR, v_id)
+--AS
+--BEGIN
+--  open c_parcari for
+--  SELECT * FROM parcari;
+--END afiseaza_parcari;
