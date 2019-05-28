@@ -70,10 +70,11 @@ END login_user;
 
 --Rezervare masina:
 CREATE OR REPLACE PROCEDURE rezervare_masina
-(v_id_client rezervari.id_client%TYPE, v_id_masina rezervari.id_masina%TYPE, v_first_rent_date rezervari.first_rent_date%TYPE, v_last_rent_date rezervari.last_rent_date%TYPE, v_id_parcare_preluare rezervari.id_parcare_preluare%TYPE, v_id_parcare_predare rezervari.id_parcare_predare%TYPE)
+(v_id_client rezervari.id_client%TYPE, v_id_masina rezervari.id_masina%TYPE, v_last_rent_date rezervari.last_rent_date%TYPE, v_id_parcare_preluare rezervari.id_parcare_preluare%TYPE, v_id_parcare_predare rezervari.id_parcare_predare%TYPE)
 AS
 v_id_rezervari rezervari.id_rezervari%TYPE;
 v_rezervation_date rezervari.rezervation_date%TYPE := sysdate();
+v_first_rent_date rezervari.first_rent_date%TYPE := sysdate();
 BEGIN
   SELECT MAX(id_rezervari)+1 INTO v_id_rezervari FROM rezervari;
   INSERT INTO rezervari
@@ -81,6 +82,9 @@ BEGIN
   VALUES
   (v_id_rezervari, v_id_client, v_id_masina, v_first_rent_date, v_last_rent_date, v_rezervation_date, v_id_parcare_predare, v_id_parcare_preluare);
   COMMIT;
+  UPDATE masini
+  SET rezervat = 1
+  WHERE v_id_masina=id_masina;
 END rezervare_masina;
 
 --Istoric rezervari, profil:
@@ -103,13 +107,13 @@ BEGIN
 END logout;
 
 --Stergere rezervare:
-CREATE OR REPLACE PROCEDURE stergere_rezervare
-(v_id_user clienti.id_client%TYPE, v_id_rezervare rezervari.id_rezervari%TYPE)
-AS
-BEGIN
-  DELETE FROM rezervari
-  WHERE v_id_user = id_client AND v_id_rezervare=id_rezervari AND first_rent_date<sysdate();
-END stergere_rezervare;
+--CREATE OR REPLACE PROCEDURE stergere_rezervare
+--(v_id_user clienti.id_client%TYPE, v_id_rezervare rezervari.id_rezervari%TYPE)
+--AS
+--BEGIN
+--  DELETE FROM rezervari
+--  WHERE v_id_user = id_client AND v_id_rezervare=id_rezervari AND first_rent_date<sysdate();
+--END stergere_rezervare;
 
 --Login admin:
 CREATE OR REPLACE PROCEDURE login_admin
