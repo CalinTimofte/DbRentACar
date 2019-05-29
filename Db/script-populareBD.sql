@@ -366,3 +366,4 @@ INSERT INTO clienti VALUES(v_i,v_username,v_nume,v_prenume,v_telefon,v_email,v_p
   -- end-ul de la begin
 END ; 
 
+CREATE INDEX masini_libere ON masini(id_parcare,rezervat);
