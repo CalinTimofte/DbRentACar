@@ -97,14 +97,29 @@ BEGIN
 END istoric_rezervari;
 
 --Logout
-CREATE OR REPLACE PROCEDURE logout
-(v_id_user clienti.id_client%TYPE)
-AS
+   create or replace Procedure logoutUser
+(mesaj OUT VARCHAR2, v_id_user IN INTEGER)
+IS
+counter      INTEGER ;
+v_count      INTEGER;
+
 BEGIN
+ select ID_ISTORIC into v_count from ISTORIC  WHERE (id_client=v_id_user and DATA_DECONECTARE is null)   ;
+if(v_count != 0) then
   UPDATE istoric
   SET data_deconectare = sysdate()
-  WHERE v_id_user=id_client AND data_deconectare IS NULL;
-END logout;
+  WHERE ID_ISTORIC = v_count;
+mesaj := 'Esti deconectat';
+end if;
+
+EXCEPTION
+WHEN no_data_found THEN
+  SELECT COUNT(*) INTO counter FROM istoric WHERE id_client=v_id_user AND data_deconectare IS NULL;
+  IF (counter = 0 ) THEN
+  mesaj := 'You can*t logout. You have to login first';
+    end if;
+
+END logoutUser;
 
 --Stergere rezervare:
 --CREATE OR REPLACE PROCEDURE stergere_rezervare
