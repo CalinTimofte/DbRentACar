@@ -336,15 +336,18 @@ BEGIN
     v_count := v_count + 1;
     
   END LOOP;
-  
-  v_path := 'Distance of node ' || v_id_parcare_2 || ' from ' || v_id_parcare_1 || ' is ' || v_distance(v_id_parcare_2) || '. ';
-  v_j := v_id_parcare_2;
-  v_path := v_path || 'Path:' || v_id_parcare_2;
-  LOOP
-    v_j := v_pred(v_j);
-    v_path := v_path || '<-' || v_j;
-    EXIT WHEN v_j = v_id_parcare_1;
-  END LOOP;
+  IF (v_distance(v_id_parcare_2) = v_infinity) THEN
+    v_path := 'Parcarea destinatie este inaccesibila din aceasta parcare';
+  ELSE
+    v_path := 'Distance of node ' || v_id_parcare_2 || ' from ' || v_id_parcare_1 || ' is ' || v_distance(v_id_parcare_2) || '. ';
+    v_j := v_id_parcare_2;
+    v_path := v_path || 'Path:' || v_id_parcare_2;
+    LOOP
+      v_j := v_pred(v_j);
+      v_path := v_path || '<-' || v_j;
+      EXIT WHEN v_j = v_id_parcare_1;
+    END LOOP;
+  END IF;
 END drumuri_parcari;
 
 --logout user, Bianca:
