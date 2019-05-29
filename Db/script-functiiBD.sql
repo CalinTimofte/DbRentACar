@@ -136,8 +136,8 @@ CREATE OR REPLACE PROCEDURE login_admin
 AS
 v_record_count_admin NUMBER := 0;
 BEGIN
-  SELECT ISNULL(COUNT(*), 0) INTO v_record_count_admin FROM admini WHERE (v_username = username) AND (v_parola = parola);
-  IF (v_record_count_user = 1)
+  SELECT NVL(COUNT(*), 0) INTO v_record_count_admin FROM admini WHERE (v_username = username) AND (v_parola = parola);
+  IF (v_record_count_admin = 1)
     THEN  
       SELECT id_admin INTO v_id_admin FROM admini WHERE (v_username = username) AND (v_parola = parola);
     ELSE v_id_admin := -1;
