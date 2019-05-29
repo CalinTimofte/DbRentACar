@@ -45,7 +45,7 @@
                <font>
                   <Font size="14.0" />
                </font></Label>
-            <DatePicker editable="false" layoutX="580.0" layoutY="178.0" promptText="Pick a date" showWeekNumbers="true" />
+            <DatePicker fx:id="datepicker_drop" editable="false" layoutX="580.0" layoutY="178.0" promptText="Pick a date" showWeekNumbers="true" />
             <Label layoutX="370.0" layoutY="216.0" prefHeight="17.0" prefWidth="61.0" text="Optional :" />
             <Label layoutX="109.0" layoutY="19.0" text="Pick up" underline="true">
                <font>

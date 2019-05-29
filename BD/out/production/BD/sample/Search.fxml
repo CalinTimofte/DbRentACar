@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.Search"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Search">
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="45.0" layoutY="17.0" mnemonicParsing="false" text="Home" />
+            <Label fx:id="warning_search" layoutX="372.0" layoutY="21.0" textFill="#e10808" />
+         </children>
+         <padding>
+            <Insets bottom="15.0" />
+         </padding>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="148.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="427.0" layoutY="11.0" mnemonicParsing="false" onAction="#nextPage" text="Next" />
+            <Button layoutX="325.0" layoutY="11.0" mnemonicParsing="false" onAction="#previousPage" text="Previous" />
+            <Button layoutX="122.0" layoutY="62.0" mnemonicParsing="false" text="Add Reservation" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tabel_masini" layoutX="19.0" layoutY="8.0" prefHeight="279.0" prefWidth="757.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

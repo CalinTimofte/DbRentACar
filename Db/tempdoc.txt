@@ -1,2 +1,4 @@
-MG Model 6 Economic 1825 1 6 DA electric 558
-Austin Model 24 SUV 4743 3 2 DA electric 371
+Datsun Model-17 Mini 329 4 4 NU benzina 312
+Subaru Model-11 Mini 3021 0 7 NU benzina 615
+Hummer Model-18 Mini 4903 2 2 NU benzina 902
+Bentley Model-9 Mini 2010 1 7 DA benzina 308

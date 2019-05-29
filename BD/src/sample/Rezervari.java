@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class Rezervari {
 
     private Integer idRezervare;
+    private Integer idClient;
     private Integer idMasina;
     private LocalDate firstRentDate;
     private LocalDate lastRentDate;
@@ -14,6 +15,15 @@ public class Rezervari {
 
     public Rezervari(Integer idRezervare, Integer idMasina, LocalDate firstRentDate, LocalDate lastRentDate, Integer idParcarePreluare, Integer idParcarePredare) {
         this.idRezervare = idRezervare;
+        this.idMasina = idMasina;
+        this.firstRentDate = firstRentDate;
+        this.lastRentDate = lastRentDate;
+        this.idParcarePreluare = idParcarePreluare;
+        this.idParcarePredare = idParcarePredare;
+    }
+    public Rezervari(Integer idRezervare,Integer idClient, Integer idMasina, LocalDate firstRentDate, LocalDate lastRentDate, Integer idParcarePreluare, Integer idParcarePredare) {
+        this.idRezervare = idRezervare;
+        this.idClient=idClient;
         this.idMasina = idMasina;
         this.firstRentDate = firstRentDate;
         this.lastRentDate = lastRentDate;
@@ -67,5 +77,13 @@ public class Rezervari {
 
     public void setIdParcarePredare(Integer idParcarePredare) {
         this.idParcarePredare = idParcarePredare;
+    }
+
+    public Integer getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(Integer idClient) {
+        this.idClient = idClient;
     }
 }

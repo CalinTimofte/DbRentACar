@@ -2,10 +2,12 @@ package validation;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import sample.Rezervari;
 
 public class Validation {
     private static Integer id = -1 ;
     private static Integer id_admin = -1;
+    public static Rezervari rezervare;
 
     public static boolean isValueNoEmpty(String val) {
 
@@ -47,5 +49,13 @@ public class Validation {
 
     public static void setId_admin(Integer id_admin) {
         Validation.id_admin = id_admin;
+    }
+
+    public static Rezervari getRezervare() {
+        return rezervare;
+    }
+
+    public static void setRezervare(Rezervari rezervare) {
+        Validation.rezervare = rezervare;
     }
 }
