@@ -1,4 +1,4 @@
---Afisare parcari:
+--Afisare parcari: checked
 CREATE OR REPLACE PROCEDURE afiseaza_parcari
 (c_parcari OUT SYS_REFCURSOR)
 AS
@@ -7,7 +7,7 @@ BEGIN
   SELECT * FROM parcari;
 END afiseaza_parcari;
 
---Inregistrare utilizator:
+--Inregistrare utilizator: checked
 CREATE OR REPLACE Function register_user
 (v_username clienti.username%TYPE, v_nume clienti.nume%TYPE, v_prenume clienti.prenume%TYPE, v_numar_telefon clienti.numar_telefon%TYPE, v_email clienti.email%TYPE, v_parola clienti.parola%TYPE, v_numar_permis clienti.numar_permis%TYPE)
 return Integer
@@ -44,7 +44,7 @@ BEGIN
   WHERE id_masina=v_id_masina;
 END notare_masina;
 
---Afisare informatii profil utilizator:
+--Afisare informatii profil utilizator: checked
 CREATE OR REPLACE PROCEDURE profil_utilizator
 (v_id_user clienti.id_client%TYPE, v_username OUT clienti.username%TYPE, v_nume OUT clienti.nume%TYPE, v_prenume OUT clienti.prenume%TYPE, v_numar_telefon OUT clienti.numar_telefon%TYPE, v_email OUT clienti.email%TYPE)
 AS
@@ -58,27 +58,31 @@ BEGIN
 END profil_utilizator;
 
 --Login user:
-CREATE OR REPLACE PROCEDURE login_user
-(v_username clienti.username%TYPE, v_parola clienti.parola%TYPE, v_id_client OUT clienti.id_client%TYPE)
+CREATE OR REPLACE Function login_user_function
+(v_username VARCHAR2, v_parola VARCHAR2)
+REturn INTEGER
 AS
 v_record_count_user NUMBER := 0;
 v_record_count_istoric NUMBER := 0;
-v_data_conectare istoric.data_conectare%TYPE := sysdate();
-v_data_deconectare istoric.data_deconectare%TYPE := NULL;
+v_id_client INTEGER := 0;
+
 BEGIN
+
   SELECT NVL(COUNT(*), 0) INTO v_record_count_user FROM clienti WHERE (v_username = username) AND (v_parola = parola);
   IF (v_record_count_user = 1)
     THEN  
       SELECT id_client INTO v_id_client FROM clienti WHERE (v_username = username) AND (v_parola = parola);
-      SELECT MAX(id_istoric)+1 INTO v_record_count_istoric FROM istoric;
+      SELECT MAX(id_istoric) INTO v_record_count_istoric FROM istoric;
       INSERT INTO istoric
       (id_istoric, id_client, data_conectare, data_deconectare)
       VALUES
-      (v_record_count_istoric, v_id_client, v_data_conectare, v_data_deconectare);
-      COMMIT;
+      (v_record_count_istoric+1, v_id_client, null, NULL);
+
     ELSE v_id_client := -1;
   END IF;
-END login_user;
+  return v_id_client;
+END login_user_function;
+
 
 --Rezervare masina:
 CREATE OR REPLACE PROCEDURE rezervare_masina
