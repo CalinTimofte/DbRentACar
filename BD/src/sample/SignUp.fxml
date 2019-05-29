@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SignUp">
+   <center>
+      <SplitPane dividerPositions="0.4498327759197324" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <AnchorPane prefHeight="457.0" prefWidth="361.0">
+               <children>
+                  <Label layoutX="125.0" layoutY="44.0" text="Please login">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="error_username_login" layoutX="90.0" layoutY="146.0" />
+                  <Label fx:id="error_password_login" layoutX="89.0" layoutY="229.0" />
+                  <TextField fx:id="usernameLogin" layoutX="91.0" layoutY="108.0" promptText="Username" />
+                  <TextField fx:id="passwordLogin" layoutX="91.0" layoutY="187.0" promptText="Password" />
+                  <Button layoutX="142.0" layoutY="268.0" mnemonicParsing="false" onAction="#Login" text="Login" />
+                  <Label fx:id="warningLoginUser" layoutX="143.0" layoutY="351.0" textFill="#ff1804">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="357.0" prefWidth="313.0">
+               <children>
+                  <TextField fx:id="username_register" layoutX="144.0" layoutY="26.0" promptText="Username" />
+                  <TextField fx:id="nume_register" layoutX="144.0" layoutY="80.0" promptText="Nume" />
+                  <TextField fx:id="prenume_register" layoutX="144.0" layoutY="138.0" promptText="Prenume" />
+                  <TextField fx:id="email_register" layoutX="144.0" layoutY="242.0" promptText="Email" />
+                  <TextField fx:id="telefon_register" layoutX="144.0" layoutY="188.0" promptText="Numar telefon" />
+                  <Button layoutX="181.0" layoutY="402.0" mnemonicParsing="false" onAction="#Register" text="Register" />
+                  <TextField fx:id="parola_register" layoutX="144.0" layoutY="295.0" promptText="Parola" />
+                  <TextField fx:id="permis_register" layoutX="144.0" layoutY="350.0" promptText="Numar permis" />
+                  <Label fx:id="error_username_register" layoutX="143.0" layoutY="63.0" />
+                  <Label fx:id="error_nume_register" layoutX="142.0" layoutY="105.0" />
+                  <Label fx:id="error_prenume_register" layoutX="142.0" layoutY="163.0" />
+                  <Label fx:id="error_telefon_register" layoutX="141.0" layoutY="220.0" />
+                  <Label fx:id="error_email_register" layoutX="143.0" layoutY="267.0" />
+                  <Label fx:id="error_parola_register" layoutX="143.0" layoutY="320.0" />
+                  <Label fx:id="error_permis_register" layoutX="143.0" layoutY="375.0" />
+               </children>
+            </AnchorPane>
+         </items>
+      </SplitPane>
+   </center>
+   <opaqueInsets>
+      <Insets bottom="8.0" top="8.0" />
+   </opaqueInsets>
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goToHome" text="Home" />
+            <Label fx:id="warningRegisterUser" layoutX="529.0" layoutY="4.0" textFill="#ee0707" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="15.0" top="10.0" />
+         </BorderPane.margin>
+      </AnchorPane>
+   </top>
+</BorderPane>

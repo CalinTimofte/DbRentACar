@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginAdmin">
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="54.0" layoutY="28.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
+         </children>
+         <opaqueInsets>
+            <Insets bottom="8.0" top="10.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="8.0" />
+         </padding>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="usernameLoginAdmin" layoutX="326.0" layoutY="123.0" promptText="Username" />
+            <TextField fx:id="passwordLoginAdmin" layoutX="326.0" layoutY="214.0" promptText="Password" />
+            <Button layoutX="375.0" layoutY="322.0" mnemonicParsing="false" onAction="#LoginAdmin" text="Login" />
+            <Label fx:id="error_admin_username" layoutX="326.0" layoutY="170.0" />
+            <Label fx:id="error_admin_password" layoutX="326.0" layoutY="273.0" />
+            <Label layoutX="360.0" layoutY="50.0" text="Login as admin">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="warrning_admin_username" layoutX="386.0" layoutY="381.0" textFill="#e40808" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

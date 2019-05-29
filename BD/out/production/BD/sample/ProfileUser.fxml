@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ProfileUser">
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="52.0" layoutY="29.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
+         </children>
+         <opaqueInsets>
+            <Insets bottom="8.0" top="10.0" />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="8.0" />
+         </padding>
+      </AnchorPane>
+   </top>
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="103.0" layoutY="28.0" text="My profile">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="53.0" layoutY="86.0" text="Username :" />
+            <Label layoutX="57.0" layoutY="233.0" text="Telefon :" />
+            <Label layoutX="66.0" layoutY="284.0" text="Email :" />
+            <Label layoutX="63.0" layoutY="135.0" text="Nume:" />
+            <Label layoutX="53.0" layoutY="183.0" text="Prenume :" />
+            <Label fx:id="profileUsername" layoutX="134.0" layoutY="86.0" />
+            <Label fx:id="profileNume" layoutX="132.0" layoutY="135.0" />
+            <Label fx:id="profilePrenume" layoutX="133.0" layoutY="183.0" />
+            <Label fx:id="profileTelefon" layoutX="131.0" layoutY="233.0" />
+            <Label fx:id="profileEmail" layoutX="130.0" layoutY="284.0" />
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane fx:id="paneProfileIstoric" prefHeight="438.0" prefWidth="503.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableIstoricRezervari" layoutX="48.0" layoutY="72.0" prefHeight="294.0" prefWidth="426.0" />
+            <Label layoutX="229.0" layoutY="31.0" text="Istoric rezervari">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
