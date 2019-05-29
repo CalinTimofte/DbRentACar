@@ -54,7 +54,7 @@ v_record_count_istoric NUMBER := 0;
 v_data_conectare istoric.data_conectare%TYPE := sysdate();
 v_data_deconectare istoric.data_deconectare%TYPE := NULL;
 BEGIN
-  SELECT ISNULL(COUNT(*), 0) INTO v_record_count_user FROM clienti WHERE (v_username = username) AND (v_parola = parola);
+  SELECT NVL(COUNT(*), 0) INTO v_record_count_user FROM clienti WHERE (v_username = username) AND (v_parola = parola);
   IF (v_record_count_user = 1)
     THEN  
       SELECT id_client INTO v_id_client FROM clienti WHERE (v_username = username) AND (v_parola = parola);
