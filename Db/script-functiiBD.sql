@@ -366,3 +366,20 @@ IF counter = 0 THEN
  raise_application_error (-20001,'You can*t logout. You have to login first');
 end if;
 END logoutUser;
+
+----------query login + inserare istoric loguri
+--Login user_istoric:
+CREATE OR REPLACE Procedure login_istoric
+(v_id_client Integer)
+AS
+v_record_count_user NUMBER := 0;
+v_record_count_istoric NUMBER := 0;
+BEGIN
+      select * into v_record_count_istoric from (select max(id_istoric) from ISTORIC);
+      
+      INSERT INTO ISTORIC
+      (ID_ISTORIC, ID_CLIENT, data_conectare, data_deconectare)
+      VALUES
+      (v_record_count_istoric+1, v_id_client, sysdate(), NULL);
+
+END login_istoric;
