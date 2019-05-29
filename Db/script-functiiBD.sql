@@ -14,11 +14,18 @@ AS
 v_client_id clienti.id_client%TYPE;
 BEGIN
   SELECT MAX(id_client)+1 INTO v_client_id FROM clienti;
-  INSERT INTO clienti
-  (id_client, username, nume, prenume, numar_telefon, email, parola, numar_permis)
-  VALUES
-  (v_id_client, v_username, v_nume, v_prenume, v_numar_telefon, v_email, v_parola, v_numar_permis);
-  COMMIT;
+  IF ( (TRIM(v_client_id) = REPLACE(TRIM(v_client_id), ' ', '')) AND (TRIM(v_username) = REPLACE(TRIM(v_username), ' ', '')) AND (TRIM(v_nume)= REPLACE(TRIM(v_nume), ' ', '')) AND (TRIM(v_prenume)= REPLACE(TRIM(v_prenume), ' ', '')) AND (TRIM(v_numar_telefon)= REPLACE(TRIM(v_numar_telefon), ' ', '')) AND (TRIM(v_email)= REPLACE(TRIM(v_email), ' ', '')) AND (TRIM(v_parola)= REPLACE(TRIM(v_parola), ' ', '')) AND (TRIM(v_numar_permis)= REPLACE(TRIM(v_numar_permis), ' ', ''))) THEN
+    INSERT INTO clienti
+    (id_client, username, nume, prenume, numar_telefon, email, parola, numar_permis)
+    VALUES
+    (v_client_id, v_username, v_nume, v_prenume, v_numar_telefon, v_email, v_parola, v_numar_permis);
+    COMMIT;
+  ELSE
+    raise bad_input;
+  END IF;
+EXCEPTION
+WHEN bad_input THEN
+ raise_application_error (-20002,'Spaces are not allowed in input fields.');
 END register_user;
 
 --Acordare nota masina:
@@ -242,7 +249,7 @@ BEGIN
   LOOP
     FETCH c_masini INTO output_marca, output_model_masina, output_clasa, output_pret, output_nota_clienti, output_numar_locuri, output_optiuni, output_combustibil, output_numar_note;
     EXIT WHEN c_masini%NOTFOUND;
-    v_message := output_marca ||' ' || output_model_masina ||' ' || output_clasa ||' ' || output_pret ||' ' || output_nota_clienti ||' ' || output_numar_locuri ||' ' || output_optiuni ||' ' || output_combustibil ||' ' || output_numar_note || v_newline;
+    v_message := output_marca ||' ' || output_model_masina ||' ' || output_clasa ||' ' || output_pret ||' ' || output_nota_clienti ||' ' || output_numar_locuri ||' ' || output_optiuni ||' ' || output_combustibil ||' ' || output_numar_note || chr(10);
     UTL_FILE.PUTF(v_fisier, v_message);
   END LOOP;
   UTL_FILE.FCLOSE(v_fisier);
