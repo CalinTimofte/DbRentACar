@@ -8,10 +8,13 @@ BEGIN
 END afiseaza_parcari;
 
 --Inregistrare utilizator:
-CREATE OR REPLACE PROCEDURE register_user
+CREATE OR REPLACE Function register_user
 (v_username clienti.username%TYPE, v_nume clienti.nume%TYPE, v_prenume clienti.prenume%TYPE, v_numar_telefon clienti.numar_telefon%TYPE, v_email clienti.email%TYPE, v_parola clienti.parola%TYPE, v_numar_permis clienti.numar_permis%TYPE)
+return Integer
 AS
 v_client_id clienti.id_client%TYPE;
+bad_input exception;
+  PRAGMA EXCEPTION_INIT( bad_input , -20001);
 BEGIN
   SELECT MAX(id_client)+1 INTO v_client_id FROM clienti;
   IF ( (TRIM(v_client_id) = REPLACE(TRIM(v_client_id), ' ', '')) AND (TRIM(v_username) = REPLACE(TRIM(v_username), ' ', '')) AND (TRIM(v_nume)= REPLACE(TRIM(v_nume), ' ', '')) AND (TRIM(v_prenume)= REPLACE(TRIM(v_prenume), ' ', '')) AND (TRIM(v_numar_telefon)= REPLACE(TRIM(v_numar_telefon), ' ', '')) AND (TRIM(v_email)= REPLACE(TRIM(v_email), ' ', '')) AND (TRIM(v_parola)= REPLACE(TRIM(v_parola), ' ', '')) AND (TRIM(v_numar_permis)= REPLACE(TRIM(v_numar_permis), ' ', ''))) THEN
@@ -20,13 +23,15 @@ BEGIN
     VALUES
     (v_client_id, v_username, v_nume, v_prenume, v_numar_telefon, v_email, v_parola, v_numar_permis);
     COMMIT;
+    Return 1;
   ELSE
     raise bad_input;
   END IF;
 EXCEPTION
 WHEN bad_input THEN
- raise_application_error (-20002,'Spaces are not allowed in input fields.');
+REturn 0;
 END register_user;
+
 
 --Acordare nota masina:
 CREATE OR REPLACE PROCEDURE notare_masina
