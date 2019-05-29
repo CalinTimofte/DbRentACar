@@ -212,7 +212,7 @@ DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
   
   -----------------------MASINI -----------------------------------------------------------------------------------
   DBMS_OUTPUT.PUT_LINE('Inserarea masinilor...');
-  FOR v_i IN 1..500 LOOP
+  FOR v_i IN 1..10000 LOOP
   
     --Intr-o parcare incap doar 1000 de masini
     SELECT COUNT(*) INTO v_temp1 FROM parcari;
@@ -225,7 +225,7 @@ DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
     -- un rand poate fi diferit doar printr-un atribut
     LOOP
       v_marca                         := lista_marca(TRUNC(DBMS_RANDOM.VALUE(0,lista_marca.count))            +1);
-      v_model                         := 'Model ' || TRUNC(DBMS_RANDOM.VALUE(1,40))       ;
+      v_model                         := 'Model-' || TRUNC(DBMS_RANDOM.VALUE(1,40))       ;
       v_clasa                         := lista_clasa(TRUNC(DBMS_RANDOM.VALUE(0,lista_clasa.count))            +1);
       v_combustibil                   := lista_combustibil(TRUNC(DBMS_RANDOM.VALUE(0,lista_combustibil.count))+1);
       v_locuri                        := TRUNC(DBMS_RANDOM.VALUE(1,7))                                        +1 ;
@@ -328,7 +328,7 @@ INSERT INTO clienti VALUES(v_i,v_username,v_nume,v_prenume,v_telefon,v_email,v_p
   ------------------------REZERVARI -----------------------------------------------------
   
  DBMS_OUTPUT.PUT_LINE('Inserarea rezervarilor...');
-  FOR v_i IN 1..500 LOOP  
+  FOR v_i IN 1..1000 LOOP  
   
       SELECT COUNT(*) INTO v_temp1 FROM clienti;
       v_id_client := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
@@ -365,5 +365,5 @@ INSERT INTO clienti VALUES(v_i,v_username,v_nume,v_prenume,v_telefon,v_email,v_p
   DBMS_OUTPUT.PUT_LINE('Inserarea istoricului reusita !');  
   -- end-ul de la begin
 END ; 
-
+/
 CREATE INDEX masini_libere ON masini(id_parcare,rezervat);
