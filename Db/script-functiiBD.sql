@@ -175,6 +175,7 @@ output_numar_locuri masini.numar_locuri%TYPE;
 output_optiuni masini.optiuni%TYPE; 
 output_combustibil masini.combustibil%TYPE;
 output_numar_note masini.combustibil%TYPE;
+output_id_masina masini.id_masina%TYPE;
 v_message CLOB;
 BEGIN
   IF (v_marca IS NOT NULL) THEN
@@ -182,36 +183,36 @@ BEGIN
       IF (v_clasa IS NOT NULL) THEN
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND clasa = v_clasa AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND clasa = v_clasa AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND clasa = v_clasa;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND clasa = v_clasa;
         END IF;
       ELSE
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND model_masina = v_model_masina;
         END IF;
       END IF;
     ELSE
       IF (v_clasa IS NOT NULL) THEN
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND clasa = v_clasa AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND clasa = v_clasa AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND clasa = v_clasa;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND clasa = v_clasa;
         END IF;
       ELSE
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND marca = v_marca;
         END IF;
       END IF;
     END IF;
@@ -220,45 +221,45 @@ BEGIN
       IF (v_clasa IS NOT NULL) THEN
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND clasa = v_clasa AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND clasa = v_clasa AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND clasa = v_clasa;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND clasa = v_clasa;
         END IF;
       ELSE
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND model_masina = v_model_masina;
         END IF;
       END IF;
     ELSE
       IF (v_clasa IS NOT NULL) THEN
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND clasa = v_clasa AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND clasa = v_clasa AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND clasa = v_clasa;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND clasa = v_clasa;
         END IF;
       ELSE
         IF (v_combustibil IS NOT NULL) THEN
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND combustibil = v_combustibil;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0 AND combustibil = v_combustibil;
         ELSE
           open c_masini for
-          SELECT marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0;
+          SELECT id_masina, marca, model_masina, clasa, pret, nota_clienti, numar_locuri, optiuni, combustibil, numar_note FROM masini WHERE id_parcare = v_id_parcare AND rezervat = 0;
         END IF;
       END IF;
     END IF;
   END IF;
   v_fisier := UTL_FILE.FOPEN('MYDIR','tempdoc.txt','R');
   LOOP
-    FETCH c_masini INTO output_marca, output_model_masina, output_clasa, output_pret, output_nota_clienti, output_numar_locuri, output_optiuni, output_combustibil, output_numar_note;
+    FETCH c_masini INTO output_id_masina, output_marca, output_model_masina, output_clasa, output_pret, output_nota_clienti, output_numar_locuri, output_optiuni, output_combustibil, output_numar_note;
     EXIT WHEN c_masini%NOTFOUND;
-    v_message := output_marca ||' ' || output_model_masina ||' ' || output_clasa ||' ' || output_pret ||' ' || output_nota_clienti ||' ' || output_numar_locuri ||' ' || output_optiuni ||' ' || output_combustibil ||' ' || output_numar_note || chr(10);
+    v_message := output_marca ||' ' || output_model_masina ||' ' || output_clasa ||' ' || output_pret ||' ' || output_nota_clienti ||' ' || output_numar_locuri ||' ' || output_optiuni ||' ' || output_combustibil ||' ' || output_numar_note||' ' || output_id_masina || chr(10);
     UTL_FILE.PUTF(v_fisier, v_message);
   END LOOP;
   UTL_FILE.FCLOSE(v_fisier);
