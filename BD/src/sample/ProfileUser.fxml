@@ -13,6 +13,7 @@
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
             <Button layoutX="52.0" layoutY="29.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
+            <Label fx:id="warningProfile" ellipsisString="" layoutX="489.0" layoutY="33.0" prefHeight="17.0" textFill="#f20a0a" />
          </children>
          <opaqueInsets>
             <Insets bottom="8.0" top="10.0" />
@@ -46,12 +47,15 @@
    <right>
       <AnchorPane fx:id="paneProfileIstoric" prefHeight="438.0" prefWidth="503.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableIstoricRezervari" layoutX="48.0" layoutY="72.0" prefHeight="294.0" prefWidth="426.0" />
+            <TableView fx:id="tableIstoricRezervari" layoutX="48.0" layoutY="72.0" prefHeight="288.0" prefWidth="426.0" />
             <Label layoutX="229.0" layoutY="31.0" text="Istoric rezervari">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
+            <ChoiceBox fx:id="profile_grade" layoutX="276.0" layoutY="380.0" prefWidth="70.0" />
+            <Button layoutX="393.0" layoutY="380.0" mnemonicParsing="false" onAction="#adaugaNota" text="Acorda nota" />
+            <Label layoutX="48.0" layoutY="384.0" text="Selecteaza o masina din tabel si o nota :" />
          </children>
       </AnchorPane>
    </right>

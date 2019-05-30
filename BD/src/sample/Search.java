@@ -34,10 +34,16 @@ public class Search {
 
     @FXML
     public void initialize() {
+        warning_search.setText("");
         makeTableMasini();
     }
 
     private void makeTableMasini() {
+        // id;
+        TableColumn<Masini, Integer> idColumn = new TableColumn<>("ID");
+        idColumn.setMinWidth(30);
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id_masina"));
+
         //marca
         TableColumn<Masini, String> marcaColumn = new TableColumn<>("Marca");
         marcaColumn.setMinWidth(30);
@@ -81,20 +87,21 @@ public class Search {
         combustibilColumn.setCellValueFactory(new PropertyValueFactory<>("combustibil"));
 
         popularetabel();
-        tabel_masini.getColumns().addAll(marcaColumn, model_masinaColumn, clasaColumn, pretColumn, nota_clientiColumn, numar_locuriColumn, optiuniColumn, combustibilColumn);
+        tabel_masini.getColumns().addAll(idColumn, marcaColumn, model_masinaColumn, clasaColumn, pretColumn, nota_clientiColumn, numar_locuriColumn, optiuniColumn, combustibilColumn);
 
 
     }
-public void popularetabel()
-{
-    if (!new File(filepath).exists()) {
-        warning_search.setText("Fisierul nu a fost gasit");
-        return;
+
+    public void popularetabel() {
+        if (!new File(filepath).exists()) {
+            warning_search.setText("Fisierul nu a fost gasit");
+            return;
+        }
+
+        tabel_masini.getItems().clear();
+        tabel_masini.setItems(getMasini());
     }
 
-    tabel_masini.getItems().clear();
-    tabel_masini.setItems( getMasini());
-}
     //Get all of the products
     public ObservableList<Masini> getMasini() {
         ObservableList<Masini> masini = FXCollections.observableArrayList();
@@ -102,7 +109,7 @@ public void popularetabel()
 
         getPage(masini);
 
-         return masini;
+        return masini;
     }
 
     public void getPage(ObservableList<Masini> masini) {
@@ -122,72 +129,86 @@ public void popularetabel()
         for (int i = initial; i < initial + 10; i++) {
             try {
                 String str = masiniList.get(i);
-                String[] arrOfStr = str.split(" ", 11);
+                String[] arrOfStr = str.split(" ", 12);
 
                 Masini oMasina = new Masini();
-                int j=0;
+                int j = 0;
                 for (String a : arrOfStr) {
-                   switch (j)
-                   {
-                            case 0 :
-                                oMasina.setMarca(a);j++;
-                                break;
+                    switch (j) {
+                        case 0:
+                            j++;
+                            try {
+                                oMasina.setId_masina(Integer.parseInt(a));
+                            } catch (Exception e) {
 
-                            case 1 :
-                               oMasina.setModel_masina(a);j++;
-                                break;
-                       case 2 :
-                           oMasina.setClasa(a);j++;
-                           break;
-                       case 3 : //pret
-                           j++;
-                           try {
-                               oMasina.setPret(Integer.parseInt(a));
-                           } catch (Exception e) {
-                              warning_search.setText("Probleme de implementare");
-                               return;
-                           }
-                           break;
-                       case 4 : //note  clienti
-                           j++;
-                           try {
-                               oMasina.setNota_clienti(Integer.parseInt(a));
-                           } catch (Exception e) {
-                               warning_search.setText("Probleme de implementare");
-                               return;
-                           }
-                           break;
+                                warning_search.setText("Probleme de implementare.");
+                                return;
+                            }
+                            break;
+                        case 1:
+                            oMasina.setMarca(a);
+                            j++;
+                            break;
 
-                       case 5 :
-                           j++;
-                           try {
-                               oMasina.setNumar_locuri(Integer.parseInt(a));
-                           } catch (Exception e) {
-                               warning_search.setText("Probleme de implementare");
-                               return;
-                           }
-                           break;
-                       case 6 :
-                           oMasina.setOptiuni(a);j++;
-                           break;
-                       case 7 :
-                           oMasina.setCombustibil(a);j++;
-                           break;
+                        case 2:
+                            oMasina.setModel_masina(a);
+                            j++;
+                            break;
+                        case 3:
+                            oMasina.setClasa(a);
+                            j++;
+                            break;
+                        case 4: //pret
+                            j++;
+                            try {
+                                oMasina.setPret(Integer.parseInt(a));
+                            } catch (Exception e) {
+                                warning_search.setText("Probleme de implementare");
+                                return;
+                            }
+                            break;
+                        case 5: //note  clienti
+                            j++;
+                            try {
+                                oMasina.setNota_clienti(Integer.parseInt(a));
+                            } catch (Exception e) {
+                                warning_search.setText("Probleme de implementare");
+                                return;
+                            }
+                            break;
 
-                       case 8 :
-                           j++;
-                           try {
-                               oMasina.setNumar_note(Integer.parseInt(a));
-                           } catch (Exception e) {
-                               warning_search.setText("Probleme de implementare");
-                               return;
-                           }
-                           break;
+                        case 6:
+                            j++;
+                            try {
+                                oMasina.setNumar_locuri(Integer.parseInt(a));
+                            } catch (Exception e) {
+                                warning_search.setText("Probleme de implementare");
+                                return;
+                            }
+                            break;
+                        case 7:
+                            oMasina.setOptiuni(a);
+                            j++;
+                            break;
+                        case 8:
+                            oMasina.setCombustibil(a);
+                            j++;
+                            break;
 
-                         default:
-                             warning_search.setText("Probleme de implementare");
-                             return;
-                   }
+                        case 9:
+                            j++;
+                            try {
+                                oMasina.setNumar_note(Integer.parseInt(a));
+                            } catch (Exception e) {
+                                warning_search.setText("Probleme de implementare");
+                                return;
+                            }
+                            break;
+
+                        default:
+                            warning_search.setText("Probleme la citire");
+                            return;
+                    }
 
                 }
 
@@ -205,7 +226,7 @@ public void popularetabel()
         if (ultimaPagina == false)
             this.page++;
         else warning_search.setText("Ati ajuns la ultima pagina");
-       popularetabel();
+        popularetabel();
     }
 
     public void previousPage(ActionEvent event) throws IOException {
@@ -217,6 +238,44 @@ public void popularetabel()
 
         popularetabel();
     }
+
+    public void goToHome(ActionEvent event) throws IOException {
+
+
+        page = 0;
+        menuUser.goToHomeUser(event);
+
+
+    }
+
+    public void makeRezervation(ActionEvent event) throws IOException {
+
+
+        if (validation.Validation.getId().equals(-1)) {
+            warning_search.setText("You are not logged in, you can't add a reservation");
+            return;
+        }
+
+        ObservableList<Masini> masiniList;
+       masiniList=tabel_masini.getSelectionModel().getSelectedItems();
+
+       if (masiniList.isEmpty())
+       {
+           warning_search.setText("Please select a car to make a reservation");
+           return;
+       }
+       Integer id= masiniList.get(0).getId_masina();
+
+    Integer status= dbController.mekeReservation(id);
+       if(status==1)
+       {
+           warning_search.setText("Rezervare inregistrata");
+           return;
+       }
+        warning_search.setText("Rezervare nu a putut fi inregistrata");
+        return;
+
+        }
 
 
 }

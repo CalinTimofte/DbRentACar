@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Algoritm">
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="52.0" layoutY="24.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
+            <Label fx:id="warning_algoritm" layoutX="386.0" layoutY="28.0" textFill="#fc0505" />
+         </children>
+         <padding>
+            <Insets bottom="8.0" />
+         </padding>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ChoiceBox fx:id="choice_algoritm_parcare1" layoutX="168.0" layoutY="100.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="choice_algoritm_parcare2" layoutX="516.0" layoutY="100.0" prefWidth="150.0" />
+            <Label layoutX="285.0" layoutY="38.0" text="Gaseste drumul cel mai ieftin intre 2 parcari" />
+            <Label layoutX="78.0" layoutY="104.0" text="Parcare 1 :" />
+            <Label layoutX="424.0" layoutY="104.0" text="Parcare 1 :" />
+            <Button layoutX="374.0" layoutY="173.0" mnemonicParsing="false" onAction="#apeleazaAlgoritm" text="Go" />
+            <TextArea fx:id="afisare_drum" layoutX="68.0" layoutY="214.0" prefHeight="200.0" prefWidth="682.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

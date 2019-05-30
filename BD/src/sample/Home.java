@@ -176,8 +176,7 @@ public class Home {
             return;
         }
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //get current date time with Date()
+             //get current date time with Date()
         Date currentDate = new Date();
         Date pickedDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
@@ -256,5 +255,19 @@ public class Home {
         window.setScene(sceneViewScene);
         window.show();
     }
+
+    public void goToAlgoritm(ActionEvent event) throws IOException {
+
+        Parent sceneParent = FXMLLoader.load(getClass().getResource("/sample/Algoritm.fxml"));
+        Scene sceneViewScene = new Scene(sceneParent, 800, 500);
+
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(sceneViewScene);
+        window.show();
+    }
+
+
 
 }

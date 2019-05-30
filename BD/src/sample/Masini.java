@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Masini implements Serializable {
 
+    private Integer id_masina;
     private String marca;
     private
     String model_masina;
@@ -23,7 +24,8 @@ public class Masini implements Serializable {
     Integer numar_note;
 
     public Masini() {};
-    public Masini(String marca, String model_masina, String clasa, Integer pret, Integer nota_clienti, Integer numar_locuri, String optiuni, String combustibil, Integer numar_note) {
+   /* public Masini(  String marca, String model_masina, String clasa, Integer pret, Integer nota_clienti, Integer numar_locuri, String optiuni, String combustibil, Integer numar_note) {
+       //this.id_masina= id_masina;
         this.marca = marca;
         this.model_masina = model_masina;
         this.clasa = clasa;
@@ -33,7 +35,7 @@ public class Masini implements Serializable {
         this.optiuni = optiuni;
         this.combustibil = combustibil;
         this.numar_note = numar_note;
-    }
+    }*/
 
     public String getMarca() {
         return marca;
@@ -105,5 +107,13 @@ public class Masini implements Serializable {
 
     public void setNumar_note(Integer numar_note) {
         this.numar_note = numar_note;
+    }
+
+    public Integer getId_masina() {
+        return id_masina;
+    }
+
+    public void setId_masina(Integer id_masina) {
+        this.id_masina = id_masina;
     }
 }

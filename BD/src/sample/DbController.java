@@ -1,12 +1,13 @@
 package sample;
 
 import javafx.collections.ObservableList;
-import javafx.scene.Cursor;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class DbController {
@@ -215,7 +216,7 @@ public class DbController {
 
             cstmt.execute();
             status = cstmt.getInt(1);
-
+return status;
 
         } catch (java.sql.SQLException e) {
 
@@ -311,5 +312,68 @@ if(id != -1) {
             System.out.println("Exception from database.");
         }
     }
+
+    public Integer  mekeReservation(Integer v_id_masina){
+Rezervari rezervare = validation.Validation.getRezervare();
+Integer id_client = validation.Validation.getId();
+        LocalDate date = rezervare.getLastRentDate();
+       java.sql.Date date_reservation = Date.valueOf(date);
+
+        try {
+            Connection con = Database.getConnection();
+            CallableStatement cstmt = con.prepareCall("{call rezervare_masina(?,?,?,?,?)}");
+            cstmt.setInt("v_id_client ", id_client);
+            cstmt.setInt("v_id_masina",v_id_masina);
+            cstmt.setDate("v_last_rent_date",date_reservation);
+            cstmt.setInt("v_id_parcare_preluare",rezervare.getIdParcarePreluare());
+            cstmt.setInt("v_id_parcare_predare",rezervare.getIdParcarePredare());
+
+            cstmt.execute();
+
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+            System.out.println("Exception from database.");
+            return 0;
+        }
+        return 1;
+    }
+
+    public Integer apeleazaAlgoritm(Integer parcare1, Integer parcare2, TextArea rezultat_afisare){
+        try {
+            Connection con = Database.getConnection();
+            CallableStatement cstmt = con.prepareCall("{call drumuri_parcari(?,?,?)}");
+            cstmt.setInt("v_id_parcare_1 ", parcare1);
+            cstmt.setInt("v_id_parcare_2",parcare2);
+            cstmt.registerOutParameter("v_path", Types.VARCHAR);
+
+           cstmt.execute();
+                rezultat_afisare.setText( cstmt.getString("v_path"));
+
+
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+            System.out.println("Exception from database.");
+            return 0;
+        }
+        return 1;
+    }
+public Integer notare_masina(Integer id_masina,Integer nota){
+
+    try {
+        Connection con = Database.getConnection();
+        CallableStatement cstmt = con.prepareCall("{call notare_masina(?,?)}");
+        cstmt.setInt("v_id_masina ", id_masina);
+        cstmt.setInt("v_nota",nota);
+
+        cstmt.execute();
+    } catch (java.sql.SQLException e) {
+        e.printStackTrace();
+        System.out.println("Exception from database.");
+        return 0;
+    }
+    return 1;
+
+}
+
 
 }

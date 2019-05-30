@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import validation.Validation;
 
 import java.io.IOException;
 
@@ -42,7 +43,9 @@ if(id_admin ==-1)
 {
     warrning_admin_username.setText("Failde login");
 }
-else warrning_admin_username.setText("Login as admin succesful");
+else{warrning_admin_username.setText("Login as admin succesful");
+    Validation.setId_admin(id_admin);
+}
         }
     }
 

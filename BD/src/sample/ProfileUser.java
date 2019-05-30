@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -12,7 +13,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ProfileUser {
     private MenuUser menuUser = new MenuUser();
@@ -36,24 +39,31 @@ public class ProfileUser {
     @FXML
     private TableView<Rezervari> tableIstoricRezervari;
 
+    @FXML
+    private Label warningProfile;
+
+    @FXML
+    private ChoiceBox<Integer> profile_grade;
+
 
     /**
      * When this method is called, it will change the Scene to home
      */
     public void goToHome(ActionEvent event) throws IOException {
-       menuUser.goToHomeUser(event);
+        menuUser.goToHomeUser(event);
     }
 
     @FXML
     public void initialize() {
-        if(validation.Validation.getId() != -1)
-        dbController.afiseazaDateProfil(validation.Validation.getId(),  profileUsername, profileNume, profilePrenume, profileTelefon,  profileEmail);
+        if (validation.Validation.getId() != -1)
+            dbController.afiseazaDateProfil(validation.Validation.getId(), profileUsername, profileNume, profilePrenume, profileTelefon, profileEmail);
 
         this.makeTableView();
+        this.makeChoiceBox();
 
     }
-    private void makeTableView()
-    {
+
+    private void makeTableView() {
         //Id_Rezervare column
         TableColumn<Rezervari, Integer> idRezervareColumn = new TableColumn<>("Id_Rezervare");
         idRezervareColumn.setMinWidth(30);
@@ -92,13 +102,64 @@ public class ProfileUser {
 
     }
 
-    //Get all of the products
-    public ObservableList<Rezervari> getRezervari(){
+    //Get all rezervations
+    public ObservableList<Rezervari> getRezervari() {
         ObservableList<Rezervari> rezervari = FXCollections.observableArrayList();
 
-        dbController.afiseazaIstoricProfil( validation.Validation.getId(),  rezervari);
+        dbController.afiseazaIstoricProfil(validation.Validation.getId(), rezervari);
 
         return rezervari;
     }
 
+
+    private void makeChoiceBox() {
+
+        List<Integer> noteList = new ArrayList<>();
+        noteList.add(1);
+        noteList.add(2);
+        noteList.add(3);
+        noteList.add(4);
+        noteList.add(5);
+
+
+        ObservableList obListNote = FXCollections.observableList(noteList);
+        profile_grade.getItems().clear();
+        profile_grade.setValue(5);
+        profile_grade.getItems().addAll(obListNote);
+    }
+
+
+    /// add nota
+
+    public void adaugaNota(ActionEvent event) throws IOException {
+
+        if (validation.Validation.getId().equals(-1)) {
+            warningProfile.setText("You are not logged in, how did you get here ?");
+            return;
+        }
+
+
+        ObservableList<Rezervari> rezervariList;
+        rezervariList = tableIstoricRezervari.getSelectionModel().getSelectedItems();
+
+        if (rezervariList.isEmpty()) {
+            warningProfile.setText("Please select a car to make a reservation");
+            return;
+        }
+
+        Integer nota = profile_grade.getValue();
+        Integer id_masina = rezervariList.get(0).getIdMasina();
+
+        Integer status = dbController.notare_masina(id_masina, nota);
+
+        if (status == 1) {
+            warningProfile.setText("Nota acordata");
+            return;
+        }
+
+        warningProfile.setText("Nota nu a putut fi acordate");
+        return;
+
+
+    }
 }

@@ -68,7 +68,7 @@ public class SignUp {
         if (isUsernameEmpty && isPasswordEmpty) {
 
             Integer id = dbController.loginUser(usernameLogin.getText(),passwordLogin.getText());
-            System.out.println(id);
+
             if(id==-1) {
                 warningLoginUser.setText("Login nereusit :( ");
                 return;
