@@ -191,7 +191,7 @@ BEGIN
   
 --------------Drumuri------------
 DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
-  FOR v_i IN 1..100 LOOP
+  FOR v_i IN 1..500 LOOP
        SELECT COUNT(*) INTO v_temp1 FROM parcari;
     LOOP
       v_id_parcare1 := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
@@ -216,10 +216,11 @@ DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
   
     --Intr-o parcare incap doar 1000 de masini
     SELECT COUNT(*) INTO v_temp1 FROM parcari;
+  
     LOOP
       v_id_parcare := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
       SELECT COUNT(*) INTO v_temp FROM masini WHERE id_parcare = v_id_parcare ;
-      EXIT WHEN v_temp <= 10000;
+      EXIT WHEN v_temp <= 100000;
     END LOOP;
     
     -- un rand poate fi diferit doar printr-un atribut
@@ -272,7 +273,7 @@ DBMS_OUTPUT.PUT_LINE('Inserarea a drumurilor...');
   
   ----------------------CLIENTI -------------------------------------------------
   DBMS_OUTPUT.PUT_LINE('Inserarea clientilor...');
-FOR v_i IN 1..500 LOOP
+FOR v_i IN 1..10000 LOOP
 v_nume := lista_nume(TRUNC(DBMS_RANDOM.VALUE(0,lista_nume.count))+1);
 v_prenume := lista_prenume(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume.count))+1);
 
@@ -328,7 +329,7 @@ INSERT INTO clienti VALUES(v_i,v_username,v_nume,v_prenume,v_telefon,v_email,v_p
   ------------------------REZERVARI -----------------------------------------------------
   
  DBMS_OUTPUT.PUT_LINE('Inserarea rezervarilor...');
-  FOR v_i IN 1..1000 LOOP  
+  FOR v_i IN 1..5000 LOOP  
   
       SELECT COUNT(*) INTO v_temp1 FROM clienti;
       v_id_client := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;
@@ -352,7 +353,7 @@ INSERT INTO clienti VALUES(v_i,v_username,v_nume,v_prenume,v_telefon,v_email,v_p
   ------------------ ISTORIC -------------------------------------------------------------
 
   DBMS_OUTPUT.PUT_LINE('Inserarea istoricului...');
-  FOR v_i IN 1..500 LOOP  
+  FOR v_i IN 1..3000 LOOP  
   
    SELECT COUNT(*) INTO v_temp1 FROM clienti;
       v_id_client := TRUNC(DBMS_RANDOM.VALUE(0,v_temp1))+1;

@@ -6,7 +6,7 @@ BEGIN
   open c_parcari for
   SELECT * FROM parcari;
 END afiseaza_parcari;
-
+/
 --Inregistrare utilizator: checked
 CREATE OR REPLACE Function register_user
 (v_username clienti.username%TYPE, v_nume clienti.nume%TYPE, v_prenume clienti.prenume%TYPE, v_numar_telefon clienti.numar_telefon%TYPE, v_email clienti.email%TYPE, v_parola clienti.parola%TYPE, v_numar_permis clienti.numar_permis%TYPE)
@@ -31,7 +31,7 @@ EXCEPTION
 WHEN bad_input THEN
 REturn 0;
 END register_user;
-
+/
 
 --Acordare nota masina:
 CREATE OR REPLACE PROCEDURE notare_masina
@@ -43,6 +43,7 @@ BEGIN
       numar_note = numar_note + 1
   WHERE id_masina=v_id_masina;
 END notare_masina;
+/
 
 --Afisare informatii profil utilizator: checked
 CREATE OR REPLACE PROCEDURE profil_utilizator
@@ -56,6 +57,7 @@ BEGIN
 --    ELSE error
   END IF;
 END profil_utilizator;
+/
 
 --Login user:
 CREATE OR REPLACE Function login_user_function
@@ -67,7 +69,6 @@ v_record_count_istoric NUMBER := 0;
 v_id_client INTEGER := 0;
 
 BEGIN
-
   SELECT NVL(COUNT(*), 0) INTO v_record_count_user FROM clienti WHERE (v_username = username) AND (v_parola = parola);
   IF (v_record_count_user = 1)
     THEN  
@@ -82,7 +83,7 @@ BEGIN
   END IF;
   return v_id_client;
 END login_user_function;
-
+/
 
 --Rezervare masina:
 CREATE OR REPLACE PROCEDURE rezervare_masina
@@ -102,6 +103,7 @@ BEGIN
   SET rezervat = 1
   WHERE v_id_masina=id_masina;
 END rezervare_masina;
+/
 
 --Istoric rezervari, profil:
 CREATE OR REPLACE PROCEDURE istoric_rezervari
@@ -111,6 +113,7 @@ BEGIN
   open c_istoric_rezervari for
   SELECT * FROM rezervari WHERE id_client=v_id_client ORDER BY REZERVATION_DATE DESC;
 END istoric_rezervari;
+/
 
 --Logout
    create or replace Procedure logoutUser
@@ -136,6 +139,7 @@ WHEN no_data_found THEN
     end if;
 
 END logoutUser;
+/
 
 --Stergere rezervare:
 --CREATE OR REPLACE PROCEDURE stergere_rezervare
@@ -264,7 +268,7 @@ BEGIN
   END LOOP;
   UTL_FILE.FCLOSE(v_fisier);
 END afiseaza_masini;
-
+/
 --Numar drumuri
 --CREATE OR REPLACE FUNCTION nr_drumuri
 --RETURN NUMBER
@@ -274,7 +278,7 @@ END afiseaza_masini;
 --  SELECT COUNT(*)+1 INTO v_nr FROM drumuri;
 --  return v_nr;
 --END nr_drumuri;
-
+/
 --Drumuri intre parcari:
 CREATE OR REPLACE PROCEDURE drumuri_parcari
 (v_id_parcare_1 drumuri.id_parcare1%TYPE, v_id_parcare_2 drumuri.id_parcare2%TYPE, v_path OUT VARCHAR2)
@@ -350,9 +354,9 @@ BEGIN
     END LOOP;
   END IF;
 END drumuri_parcari;
-
---logout user, Bianca:
-create or replace PROCEDURE logoutUser
+/
+--logout user, not used:
+/*create or replace PROCEDURE logoutUser
 (v_id_user clienti.id_client%TYPE)
 AS
 counter INTEGER;
@@ -370,6 +374,32 @@ IF counter = 0 THEN
  raise_application_error (-20001,'You can*t logout. You have to login first');
 end if;
 END logoutUser;
+*/
+/
+  create or replace Procedure logoutUser
+(mesaj OUT VARCHAR2, v_id_user IN INTEGER)
+IS
+counter      INTEGER ;
+v_count      INTEGER;
+
+BEGIN
+ select ID_ISTORIC into v_count from ISTORIC  WHERE (id_client=v_id_user and DATA_DECONECTARE is null)   ;
+if(v_count != 0) then
+  UPDATE istoric
+  SET data_deconectare = sysdate()
+  WHERE ID_ISTORIC = v_count;
+mesaj := 'Esti deconectat';
+end if;
+
+EXCEPTION
+WHEN no_data_found THEN
+  SELECT COUNT(*) INTO counter FROM istoric WHERE id_client=v_id_user AND data_deconectare IS NULL;
+  IF (counter = 0 ) THEN
+  mesaj := 'You can*t logout. You have to login first';
+    end if;
+
+END logoutUser;
+/
 
 ----------query login + inserare istoric loguri
 --Login user_istoric:
@@ -387,3 +417,4 @@ BEGIN
       (v_record_count_istoric+1, v_id_client, sysdate(), NULL);
 
 END login_istoric;
+/
