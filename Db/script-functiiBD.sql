@@ -85,7 +85,7 @@ BEGIN
 END login_user_function;
 /
 
---Rezervare masina:
+--Rezervare masina: checked
 CREATE OR REPLACE PROCEDURE rezervare_masina
 (v_id_client rezervari.id_client%TYPE, v_id_masina rezervari.id_masina%TYPE, v_last_rent_date rezervari.last_rent_date%TYPE, v_id_parcare_preluare rezervari.id_parcare_preluare%TYPE, v_id_parcare_predare rezervari.id_parcare_predare%TYPE)
 AS
@@ -105,7 +105,7 @@ BEGIN
 END rezervare_masina;
 /
 
---Istoric rezervari, profil:
+--Istoric rezervari, profil: checked
 CREATE OR REPLACE PROCEDURE istoric_rezervari
 (v_id_client rezervari.id_client%TYPE, c_istoric_rezervari OUT SYS_REFCURSOR)
 AS
@@ -115,7 +115,7 @@ BEGIN
 END istoric_rezervari;
 /
 
---Logout
+--Logout checked
    create or replace Procedure logoutUser
 (mesaj OUT VARCHAR2, v_id_user IN INTEGER)
 IS
@@ -164,7 +164,9 @@ BEGIN
   END IF;
 END login_admin;
 /
---Search dupa parcare si perioada:
+
+
+--Search dupa parcare si perioada: checked
 CREATE OR REPLACE PROCEDURE afiseaza_masini
 (v_id_parcare parcari.id_parcare%TYPE, v_marca masini.marca%TYPE, v_model_masina masini.model_masina%TYPE, v_clasa masini.clasa%TYPE, v_combustibil masini.combustibil%TYPE)
 AS
@@ -279,7 +281,9 @@ END afiseaza_masini;
 --  return v_nr;
 --END nr_drumuri;
 /
---Drumuri intre parcari:
+
+
+--Drumuri intre parcari: checked
 CREATE OR REPLACE PROCEDURE drumuri_parcari
 (v_id_parcare_1 drumuri.id_parcare1%TYPE, v_id_parcare_2 drumuri.id_parcare2%TYPE, v_path OUT VARCHAR2)
 AS
@@ -355,6 +359,8 @@ BEGIN
   END IF;
 END drumuri_parcari;
 /
+
+
 --logout user, not used:
 /*create or replace PROCEDURE logoutUser
 (v_id_user clienti.id_client%TYPE)
@@ -375,6 +381,7 @@ IF counter = 0 THEN
 end if;
 END logoutUser;
 */
+
 /
   create or replace Procedure logoutUser
 (mesaj OUT VARCHAR2, v_id_user IN INTEGER)
@@ -401,7 +408,7 @@ WHEN no_data_found THEN
 END logoutUser;
 /
 
-----------query login + inserare istoric loguri
+----------query login + inserare istoric loguri : checked
 --Login user_istoric:
 CREATE OR REPLACE Procedure login_istoric
 (v_id_client Integer)
