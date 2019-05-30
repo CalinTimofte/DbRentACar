@@ -255,7 +255,7 @@ BEGIN
       END IF;
     END IF;
   END IF;
-  v_fisier := UTL_FILE.FOPEN('MYDIR','tempdoc.txt','R');
+  v_fisier := UTL_FILE.FOPEN('MYDIR','tempdoc.txt','W');
   LOOP
     FETCH c_masini INTO output_id_masina, output_marca, output_model_masina, output_clasa, output_pret, output_nota_clienti, output_numar_locuri, output_optiuni, output_combustibil, output_numar_note;
     EXIT WHEN c_masini%NOTFOUND;
