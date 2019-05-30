@@ -163,7 +163,7 @@ BEGIN
     ELSE v_id_admin := -1;
   END IF;
 END login_admin;
-
+/
 --Search dupa parcare si perioada:
 CREATE OR REPLACE PROCEDURE afiseaza_masini
 (v_id_parcare parcari.id_parcare%TYPE, v_marca masini.marca%TYPE, v_model_masina masini.model_masina%TYPE, v_clasa masini.clasa%TYPE, v_combustibil masini.combustibil%TYPE)
@@ -263,7 +263,7 @@ BEGIN
   LOOP
     FETCH c_masini INTO output_id_masina, output_marca, output_model_masina, output_clasa, output_pret, output_nota_clienti, output_numar_locuri, output_optiuni, output_combustibil, output_numar_note;
     EXIT WHEN c_masini%NOTFOUND;
-    v_message := output_marca ||' ' || output_model_masina ||' ' || output_clasa ||' ' || output_pret ||' ' || output_nota_clienti ||' ' || output_numar_locuri ||' ' || output_optiuni ||' ' || output_combustibil ||' ' || output_numar_note||' ' || output_id_masina || chr(10);
+    v_message := output_id_masina ||' ' || output_marca ||' ' || output_model_masina ||' ' || output_clasa ||' ' || output_pret ||' ' || output_nota_clienti ||' ' || output_numar_locuri ||' ' || output_optiuni ||' ' || output_combustibil ||' ' || output_numar_note|| chr(10);
     UTL_FILE.PUTF(v_fisier, v_message);
   END LOOP;
   UTL_FILE.FCLOSE(v_fisier);
